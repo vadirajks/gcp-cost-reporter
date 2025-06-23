@@ -26,7 +26,7 @@ This tool helps teams keep track of their cloud spending by providing clear, aut
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/gcp-cost-reporter.git](https://github.com/your-username/gcp-cost-reporter.git)
+    git clone [https://github.com/vadirajks/gcp-cost-reporter.git](https://github.com/vadirajks/gcp-cost-reporter.git)
     cd gcp-cost-reporter
     ```
 
