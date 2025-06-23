@@ -1,0 +1,22 @@
+# EXAMPLE CONFIGURATION
+# Copy this file to config.yaml and fill in your details.
+# DO NOT commit your actual config.yaml file to Git.
+
+# The full BigQuery table ID for your billing export.
+bigquery_billing_table: "your-gcp-project.your_dataset.gcp_billing_export_v1_XXXXXX_XXXXXX_XXXXXX"
+
+# The local directory where daily cost data backups will be stored.
+backup_directory: "/tmp/gcp_cost_backups"
+
+# The default Slack channel ID to post messages to.
+default_slack_channel_id: "C02A1B3C4D5" # Example: #gcp-alerts
+
+# List of all GCP projects to monitor.
+projects:
+  - id: "your-project-id-1"
+    name: "Production Environment"
+    # This project will use the default_slack_channel_id
+
+  - id: "your-project-id-2"
+    name: "Staging Environment"
+    slack_channel_id: "C03E4F5G6H7" # Example: #staging-alerts
