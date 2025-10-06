@@ -1,19 +1,26 @@
 # GCP Cost Reporter for Slack
 
-A flexible and powerful Python script to monitor Google Cloud Platform costs, generate daily summaries, and send detailed, aggregated reports to Slack.
+A comprehensive Python script that queries Google Cloud Platform (GCP) billing data from BigQuery, generates detailed cost analysis reports, and sends them as well-formatted messages to Slack.
 
-This tool helps teams keep track of their cloud spending by providing clear, automated reports that highlight cost trends and break down expenses by service, SKU, and region.
+This tool helps teams monitor their GCP spending by providing daily summaries, month-over-month comparisons and granular break down expenses by projects, services and there SKU's
 
-## Features
+## Key Features
 
-- **Multi-Project Reporting**: Monitor costs for multiple GCP projects in a single run.
-- **Slack Integration**: Posts a main summary and detailed, threaded replies for each service.
-- **Intelligent Aggregation**: For complex services like Compute Engine, SKUs are aggregated into human-readable categories (e.g., "VM Core Hours (On-Demand)", "Network: Data Transfer").
-- **Logical Sorting**: Slack threads are intelligently sorted to show the highest-cost services first and group related services (like BigQuery) together.
-- **Cost-Saving Cache**: Automatically caches daily results to avoid re-running expensive BigQuery queries.
-- **Resilient & Robust**: Includes retry logic for Slack notifications and pre-flight cost estimation for BigQuery queries.
-- **Highly Configurable**: All settings, projects, and Slack channels are managed via an external `config.yaml` file.
-- **Flexible Usage**: Supports command-line arguments to force data refreshes and specify config file paths.
+-   **Multi-Project Reporting**: Monitor costs for multiple GCP projects in a single run.
+-   **Detailed Slack Integration**: Posts a main summary table by service, followed by detailed, threaded replies with granular SKU-level breakdowns for each service.
+-   **Advanced Cost Analysis**:
+    -   Calculates a **month-to-date forecast**.
+    -   Compares spending against a **prorated last-month baseline**.
+    -   Displays a **7-day average** and recent daily costs to identify trends.
+    -   Highlights the most recent day's cost variance against the 7-day average.
+-   **Smart Compute Engine Aggregation**: Simplifies complex Compute Engine costs by grouping hundreds of SKUs into easy-to-understand categories (e.g., "VM Core Hours", "VM RAM").
+-   **Custom Sorting**: Prioritizes BigQuery costs and then sorts all other services by current spending, ensuring the most important information is always at the top.
+-   **Intelligent Caching**: Saves query results to minimize BigQuery costs and automatically refreshes the previous month's data during the first 7 days of a new month to ensure billing data is final.
+-   **Clean & Readable Reports**: Uses `prettytable` to generate perfectly aligned, easy-to-read text tables with row numbers.
+-   **Highly Configurable**: All settings, projects, and Slack channels are managed via an external `config.yaml` file.
+-   **Resilient Notifications**: Includes a retry mechanism for sending Slack messages to handle temporary network or API issues.
+-   **Cost-Aware Execution**: Performs a BigQuery "dry run" before executing queries to estimate the cost of the query itself.
+-   **Flexible Usage**: Supports command-line arguments to force data refreshes and specify config file paths.
 
 ## Prerequisites
 
@@ -85,7 +92,7 @@ This section outlines potential future improvements for the project. Contributio
 
 ### Deeper Cost Insights
 
--   **Cost Anomaly Detection**: Instead of just comparing to the previous month, implement statistical analysis (e.g., based on a 7 or 30-day rolling average) to automatically detect and flag unusual cost spikes for a service with a "🔥 **COST ANOMALY**" warning.
+-   **Cost Anomaly Detection**: Instead of just comparing to the previous month, implement statistical analysis (e.g. 30-day rolling average) to automatically detect and flag unusual cost spikes for a service with a "🔥 **COST ANOMALY**" warning.
 -   **Label-Based Cost Breakdown**: Extend the query and reporting logic to group costs by GCP resource labels (e.g., `team: backend`, `env: prod`). This would provide powerful, fine-grained cost attribution for different teams or applications.
 -   **Interactive Slack Bot**: Add functionality for the script to listen to replies in Slack. For example, replying to a "Compute Engine" summary with the word `raw` could trigger the bot to post a new reply with the detailed, non-aggregated list of SKUs.
 
